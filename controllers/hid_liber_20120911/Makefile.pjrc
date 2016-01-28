@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = hid_liber_pjrc
+TARGET = epiphanies_tmk_hidliber_20120911_pjrc
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core

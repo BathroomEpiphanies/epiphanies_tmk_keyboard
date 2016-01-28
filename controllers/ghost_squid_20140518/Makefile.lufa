@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = ghostsquid_lufa
+TARGET = epiphanies_tmk_ghostsquid_20140518_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core

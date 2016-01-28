@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = kittenpaw_lufa
+TARGET = epiphanies_tmk_kittenpaw_20130602_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core

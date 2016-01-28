@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = hid_liber_lufa
+TARGET = epiphanies_tmk_hidliber_20120911_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core

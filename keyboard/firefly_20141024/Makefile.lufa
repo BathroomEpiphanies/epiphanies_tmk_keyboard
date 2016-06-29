@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = epiphenies_tmk_firefly_20141024_lufa
+TARGET = epiphanies_tmk_firefly_20141024_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core

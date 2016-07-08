@@ -61,31 +61,31 @@ static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 /* Specifies the ports and pin numbers for the rows */
 static
 uint8_t *const row_ddr[MATRIX_ROWS] = {
-                                           _DDRB,                  _DDRB,
-                                                           _DDRC,  _DDRC,
-           _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,
-           _DDRF,  _DDRF,                  _DDRF,  _DDRF,  _DDRF,  _DDRF};
+  _DDRB,                  _DDRB,
+  _DDRC,  _DDRC,
+  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,
+  _DDRF,  _DDRF,                  _DDRF,  _DDRF,  _DDRF,  _DDRF};
 
 static
 uint8_t *const row_port[MATRIX_ROWS] = {
-                                          _PORTB,                 _PORTB,
-                                                          _PORTC, _PORTC,
-          _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD,
-          _PORTF, _PORTF,                 _PORTF, _PORTF, _PORTF, _PORTF};
+  _PORTB,                 _PORTB,
+  _PORTC, _PORTC,
+  _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD,
+  _PORTF, _PORTF,                 _PORTF, _PORTF, _PORTF, _PORTF};
 
 static
 uint8_t *const row_pin[MATRIX_ROWS] = {
-                                           _PINB,                  _PINB,
-                                                           _PINC,  _PINC,
-           _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,
-           _PINF,  _PINF,                  _PINF,  _PINF,  _PINF,  _PINF};
+  _PINB,                  _PINB,
+  _PINC,  _PINC,
+  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,
+  _PINF,  _PINF,                  _PINF,  _PINF,  _PINF,  _PINF};
 
 static
 const uint8_t row_bit[MATRIX_ROWS] = {
-                                           _BIT4,                  _BIT7,
-                                                           _BIT6,  _BIT7,
-           _BIT0,  _BIT1,  _BIT2,  _BIT3,  _BIT4,  _BIT5,  _BIT6,  _BIT7,
-           _BIT0,  _BIT1,                  _BIT4,  _BIT5,  _BIT6,  _BIT7};
+  _BIT4,                  _BIT7,
+  _BIT6,  _BIT7,
+  _BIT0,  _BIT1,  _BIT2,  _BIT3,  _BIT4,  _BIT5,  _BIT6,  _BIT7,
+  _BIT0,  _BIT1,                  _BIT4,  _BIT5,  _BIT6,  _BIT7};
 
 static
 const uint8_t mask = 0x0E;
@@ -124,108 +124,98 @@ void setup_leds(void) {
 
 
 inline
-uint8_t matrix_rows(void)
-{
-    return MATRIX_ROWS;
+uint8_t matrix_rows(void) {
+  return MATRIX_ROWS;
 }
 
 inline
-uint8_t matrix_cols(void)
-{
-    return MATRIX_COLS;
+uint8_t matrix_cols(void) {
+  return MATRIX_COLS;
 }
 
-void matrix_init(void)
-{
-    // To use PORTF disable JTAG with writing JTD bit twice within four cycles.
-    MCUCR |= (1<<JTD);
-    MCUCR |= (1<<JTD);
+void matrix_init(void) {
+  // To use PORTF disable JTAG with writing JTD bit twice within four cycles.
+  MCUCR |= (1<<JTD);
+  MCUCR |= (1<<JTD);
 
-    // initialize row and col
-    setup_io_pins();
-    setup_leds();
+  // initialize row and col
+  setup_io_pins();
+  setup_leds();
 
-    // initialize matrix state: all keys off
-    for (uint8_t i=0; i < MATRIX_ROWS; i++) {
-        matrix[i] = 0;
-        matrix_debouncing[i] = 0;
-    }
+  // initialize matrix state: all keys off
+  for (uint8_t i=0; i < MATRIX_ROWS; i++) {
+    matrix[i] = 0;
+    matrix_debouncing[i] = 0;
+  }
 }
 
-uint8_t matrix_scan(void)
-{
-    for (uint8_t col = 0; col < MATRIX_COLS; col++) {  // 0-7
-        pull_column(col);   // output hi on theline
-        _delay_us(5);       // without this wait it won't read stable value.
-        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {  // 0-17
-            bool prev_bit = matrix_debouncing[row] & (1<<col);
-            bool curr_bit = *row_pin[row] & row_bit[row];
-            if (prev_bit != curr_bit) {
-                matrix_debouncing[row] ^= ((matrix_row_t)1<<col);
-                if (debouncing) {
-                    dprintf("bounce!: %02X\n", debouncing);
-                }
-                debouncing = DEBOUNCE;
-            }
+uint8_t matrix_scan(void) {
+  for (uint8_t col = 0; col < MATRIX_COLS; col++) {  // 0-7
+    pull_column(col);   // output hi on theline
+    _delay_us(5);       // without this wait it won't read stable value.
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {  // 0-17
+      bool prev_bit = matrix_debouncing[row] & (1<<col);
+      bool curr_bit = *row_pin[row] & row_bit[row];
+      if (prev_bit != curr_bit) {
+        matrix_debouncing[row] ^= ((matrix_row_t)1<<col);
+        if (debouncing) {
+          dprintf("bounce!: %02X\n", debouncing);
         }
-        release_column(col);
+        debouncing = DEBOUNCE;
+      }
     }
+    release_column(col);
+  }
 
-    if (debouncing) {
-        if (--debouncing) {
-            _delay_ms(1);
-        } else {
-            for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-                matrix[i] = matrix_debouncing[i];
-            }
-        }
+  if (debouncing) {
+    if (--debouncing) {
+      _delay_ms(1);
+    } else {
+      for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+        matrix[i] = matrix_debouncing[i];
+      }
     }
+  }
 
-    return 1;
+  return 1;
 }
 
-bool matrix_is_modified(void)
-{
-    // NOTE: no longer used
-    return true;
+bool matrix_is_modified(void) {
+  // NOTE: no longer used
+  return true;
 }
 
 inline
-bool matrix_has_ghost(void)
-{
-    return false;
+bool matrix_has_ghost(void) {
+  return false;
 }
 
 inline
-bool matrix_is_on(uint8_t row, uint8_t col)
-{
-    return (matrix[row] & ((matrix_row_t)1<<col));
+bool matrix_is_on(uint8_t row, uint8_t col) {
+  return (matrix[row] & ((matrix_row_t)1<<col));
 }
 
 inline
-matrix_row_t matrix_get_row(uint8_t row)
-{
-    return matrix[row];
+matrix_row_t matrix_get_row(uint8_t row) {
+  return matrix[row];
 }
 
-void matrix_print(void)
-{
-    print("\nr/c 01234567\n");
-    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        phex(row); print(": ");
-        pbin_reverse(matrix_get_row(row));
-        print("\n");
-    }
+void matrix_print(void) {
+  print("\nr/c 01234567\n");
+  for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+    phex(row); print(": ");
+    pbin_reverse(matrix_get_row(row));
+    print("\n");
+  }
 }
 
-uint8_t matrix_key_count(void)
-{
-    uint8_t count = 0;
-    for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-        for (uint8_t j = 0; j < MATRIX_COLS; j++) {
-            if (matrix_is_on(i, j))
-                count++;
-        }
+uint8_t matrix_key_count(void) {
+  uint8_t count = 0;
+  for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+    for (uint8_t j = 0; j < MATRIX_COLS; j++) {
+      if (matrix_is_on(i, j))
+        count++;
     }
-    return count;
+  }
+  return count;
 }

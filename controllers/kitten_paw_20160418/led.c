@@ -21,13 +21,12 @@
 
 /* LED pin configuration
  *
- * Scroll Lock  PB7
+ * Scroll Lock  PC5
  * Caps Lock    PC6
- * Num Lock     PC5
+ * Num Lock     PB7
  *
  */
-void led_set(uint8_t usb_led)
-{
+void led_set(uint8_t usb_led) {
   DDRB |= (1<<7);
   DDRC |= (1<<5) | (1<<6);
   
@@ -37,12 +36,12 @@ void led_set(uint8_t usb_led)
     PORTC |=  (1<<6);
   
   if (usb_led & (1<<USB_LED_NUM_LOCK))
-    PORTC &= ~(1<<5);
-  else
-    PORTC |=  (1<<5);
-  
-  if (usb_led & (1<<USB_LED_SCROLL_LOCK))
     PORTB &= ~(1<<7);
   else
     PORTB |=  (1<<7);
+  
+  if (usb_led & (1<<USB_LED_SCROLL_LOCK))
+    PORTC &= ~(1<<5);
+  else
+    PORTC |=  (1<<5);
 }

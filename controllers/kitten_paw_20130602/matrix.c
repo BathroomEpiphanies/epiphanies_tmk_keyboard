@@ -33,7 +33,6 @@ static matrix_row_t matrix[MATRIX_ROWS];
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 
 static uint8_t read_rows(void);
-static void unselect_cols(void);
 static void select_col(uint8_t col);
 
 inline uint8_t matrix_rows(void) {
@@ -82,7 +81,6 @@ uint8_t matrix_scan(void) {
         debouncing = DEBOUNCE;
       }
     }
-    unselect_cols();
   }
   
   if (debouncing) {
@@ -139,10 +137,6 @@ static uint8_t read_rows(void) {
     (PINB&(1<<4) ? 0 : (1<<5)) |
     (PINB&(1<<5) ? 0 : (1<<6)) |
     (PINB&(1<<6) ? 0 : (1<<7));
-}
-
-static void unselect_cols(void) {
-  //  PORTD  = (PORTD & ~0b01110111) | 0b01110111;
 }
 
 static void select_col(uint8_t col) {

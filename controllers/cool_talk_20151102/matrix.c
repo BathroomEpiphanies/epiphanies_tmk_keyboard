@@ -136,30 +136,30 @@ static uint8_t read_rows(void) {
     (PINB&(1<<4) ? 0 : (1<<2)) |
     (PINB&(1<<6) ? 0 : (1<<3)) |
     (PIND&(1<<0) ? 0 : (1<<4)) |
-    (PIND&(1<<1) ? 0 : (1<<5)) |
+    (PIND&(1<<4) ? 0 : (1<<5)) |
     (PINC&(1<<2) ? 0 : (1<<6)) |
-    (PIND&(1<<4) ? 0 : (1<<7));
+    (PIND&(1<<1) ? 0 : (1<<7));
 }
 
 static void select_col(uint8_t col) {
   switch (col) {
-  case  0: PORTB = (PORTB & ~0b00101111) | 0b00001001; break;
-  case  1: PORTB = (PORTB & ~0b00101111) | 0b00101000; break;
-  case  2: PORTB = (PORTB & ~0b00101111) | 0b00000011; break;
-  case  3: PORTB = (PORTB & ~0b00101111) | 0b00100100; break;
-  case  4: PORTB = (PORTB & ~0b00101111) | 0b00001111; break;
-  case  5: PORTB = (PORTB & ~0b00101111) | 0b00000100; break;
-  case  6: PORTB = (PORTB & ~0b00101111) | 0b00101100; break;
-  case  7: PORTB = (PORTB & ~0b00101111) | 0b00101110; break;
-  case  8: PORTB = (PORTB & ~0b00101111) | 0b00101010; break;
-  case  9: PORTB = (PORTB & ~0b00101111) | 0b00100110; break;
-  case 10: PORTB = (PORTB & ~0b00101111) | 0b00100010; break;
-  case 11: PORTB = (PORTB & ~0b00101111) | 0b00001100; break;
-  case 12: PORTB = (PORTB & ~0b00101111) | 0b00001000; break;
-  case 13: PORTB = (PORTB & ~0b00101111) | 0b00100000; break;
-  case 14: PORTB = (PORTB & ~0b00101111) | 0b00000000; break;
-  case 15: PORTB = (PORTB & ~0b00101111) | 0b00001101; break;
-  case 16: PORTB = (PORTB & ~0b00101111) | 0b00000001; break;
-  case 17: PORTB = (PORTB & ~0b00101111) | 0b00001110; break;
+  case  0: PORTB = (PORTB & ~0b00101111) | 0b00001101; break;
+  case  1: PORTB = (PORTB & ~0b00101111) | 0b00000000; break;
+  case  2: PORTB = (PORTB & ~0b00101111) | 0b00100000; break;
+  case  3: PORTB = (PORTB & ~0b00101111) | 0b00001000; break;
+  case  4: PORTB = (PORTB & ~0b00101111) | 0b00001100; break;
+  case  5: PORTB = (PORTB & ~0b00101111) | 0b00100010; break;
+  case  6: PORTB = (PORTB & ~0b00101111) | 0b00100110; break;
+  case  7: PORTB = (PORTB & ~0b00101111) | 0b00101010; break;
+  case  8: PORTB = (PORTB & ~0b00101111) | 0b00101110; break;
+  case  9: PORTB = (PORTB & ~0b00101111) | 0b00101100; break;
+  case 10: PORTB = (PORTB & ~0b00101111) | 0b00000001; break;
+  case 11: PORTB = (PORTB & ~0b00101111) | 0b00001110; break;
+  case 12: PORTB = (PORTB & ~0b00101111) | 0b00001001; break;
+  case 13: PORTB = (PORTB & ~0b00101111) | 0b00101000; break;
+  case 14: PORTB = (PORTB & ~0b00101111) | 0b00000011; break;
+  case 15: PORTB = (PORTB & ~0b00101111) | 0b00100100; break;
+  case 16: PORTB = (PORTB & ~0b00101111) | 0b00001111; break;
+  case 17: PORTB = (PORTB & ~0b00101111) | 0b00000100; break;
   }
 }

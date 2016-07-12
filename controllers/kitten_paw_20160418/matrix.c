@@ -43,16 +43,16 @@ inline uint8_t matrix_cols(void) {
   return MATRIX_COLS;
 }
 
-/* Row pin configuration
+/* Column pin configuration
  *
- * row: 0    1    2    3    4    5    6    7
+ * col: 0    1    2    3    4    5    6    7
  * pin: PC7  PD5  PD3  PD1  PC2  PD6  PD4  PD2
  *
- * Column pin configuration 
+ * Rrr pin configuration 
  *
- * These columns uses one 74HC154 4 to 16 bit demultiplexer (low
- * active), together with 2 columns driven directly from the micro
- * controller, to control the 18 columns. The columns are driven from
+ * These rrrs uses one 74HC154 4 to 16 bit demultiplexer (low
+ * active), together with 2 rrrs driven directly from the micro
+ * controller, to control the 18 rrrs. The rrrs are driven from
  * pins B6,5,4,3,2,1,0.
  */
 void matrix_init(void) {
@@ -135,30 +135,30 @@ static uint8_t read_rows(void) {
     (PIND&(1<<3) ? 0 : (1<<2)) |
     (PIND&(1<<1) ? 0 : (1<<3)) |
     (PINC&(1<<2) ? 0 : (1<<4)) |
-    (PIND&(1<<6) ? 0 : (1<<5)) |
+    (PIND&(1<<2) ? 0 : (1<<5)) |
     (PIND&(1<<4) ? 0 : (1<<6)) |
-    (PIND&(1<<2) ? 0 : (1<<7));
+    (PIND&(1<<6) ? 0 : (1<<7));
 }
 
 static void select_col(uint8_t col) {
   switch (col) {
-  case  0: PORTB = (PORTB & ~0b01111111) | 0b01111100; break;
-  case  1: PORTB = (PORTB & ~0b01111111) | 0b01110100; break;
-  case  2: PORTB = (PORTB & ~0b01111111) | 0b01111000; break;
-  case  3: PORTB = (PORTB & ~0b01111111) | 0b01110000; break;
-  case  4: PORTB = (PORTB & ~0b01111111) | 0b01100000; break;
-  case  5: PORTB = (PORTB & ~0b01111111) | 0b01101000; break;
-  case  6: PORTB = (PORTB & ~0b01111111) | 0b00100001; break;
-  case  7: PORTB = (PORTB & ~0b01111111) | 0b01000001; break;
-  case  8: PORTB = (PORTB & ~0b01111111) | 0b01111110; break;
-  case  9: PORTB = (PORTB & ~0b01111111) | 0b01101110; break;
-  case 10: PORTB = (PORTB & ~0b01111111) | 0b01110110; break;
-  case 11: PORTB = (PORTB & ~0b01111111) | 0b01100110; break;
-  case 12: PORTB = (PORTB & ~0b01111111) | 0b01111010; break;
-  case 13: PORTB = (PORTB & ~0b01111111) | 0b01100010; break;
-  case 14: PORTB = (PORTB & ~0b01111111) | 0b01101100; break;
-  case 15: PORTB = (PORTB & ~0b01111111) | 0b01100100; break;
-  case 16: PORTB = (PORTB & ~0b01111111) | 0b01101010; break;
-  case 17: PORTB = (PORTB & ~0b01111111) | 0b01110010; break;
+  case  0: PORTB = (PORTB & ~0b01111111) | 0b01100100; break;
+  case  1: PORTB = (PORTB & ~0b01111111) | 0b01101100; break;
+  case  2: PORTB = (PORTB & ~0b01111111) | 0b01100010; break;
+  case  3: PORTB = (PORTB & ~0b01111111) | 0b01111010; break;
+  case  4: PORTB = (PORTB & ~0b01111111) | 0b01100110; break;
+  case  5: PORTB = (PORTB & ~0b01111111) | 0b01110110; break;
+  case  6: PORTB = (PORTB & ~0b01111111) | 0b01101110; break;
+  case  7: PORTB = (PORTB & ~0b01111111) | 0b01111110; break;
+  case  8: PORTB = (PORTB & ~0b01111111) | 0b01000001; break;
+  case  9: PORTB = (PORTB & ~0b01111111) | 0b00100001; break;
+  case 10: PORTB = (PORTB & ~0b01111111) | 0b01101010; break;
+  case 11: PORTB = (PORTB & ~0b01111111) | 0b01110010; break;
+  case 12: PORTB = (PORTB & ~0b01111111) | 0b01111100; break;
+  case 13: PORTB = (PORTB & ~0b01111111) | 0b01110100; break;
+  case 14: PORTB = (PORTB & ~0b01111111) | 0b01111000; break;
+  case 15: PORTB = (PORTB & ~0b01111111) | 0b01110000; break;
+  case 16: PORTB = (PORTB & ~0b01111111) | 0b01100000; break;
+  case 17: PORTB = (PORTB & ~0b01111111) | 0b01101000; break;
   }
 }

@@ -81,7 +81,6 @@ uint8_t matrix_scan(void) {
         debouncing = DEBOUNCE;
       }
     }
-    unselect_cols();
   }
   
   if (debouncing) {
@@ -135,30 +134,30 @@ static uint8_t read_rows(void) {
     (PINB&(1<<6) ? 0 : (1<<2)) |
     (PINB&(1<<4) ? 0 : (1<<3)) |
     (PINB&(1<<3) ? 0 : (1<<4)) |
-    (PINB&(1<<5) ? 0 : (1<<5)) |
+    (PINB&(1<<2) ? 0 : (1<<5)) |
     (PINB&(1<<0) ? 0 : (1<<6)) |
-    (PINB&(1<<2) ? 0 : (1<<7));
+    (PINB&(1<<5) ? 0 : (1<<7));
 }
 
 static void select_col(uint8_t col) {
   switch (col) {
-  case  0: PORTD = (PORTD & ~0b01111110) | 0b01001110; break;
-  case  1: PORTD = (PORTD & ~0b01111110) | 0b00111110; break;
-  case  2: PORTD = (PORTD & ~0b01111110) | 0b00011110; break;
-  case  3: PORTD = (PORTD & ~0b01111110) | 0b01000110; break;
-  case  4: PORTD = (PORTD & ~0b01111110) | 0b00100110; break;
-  case  5: PORTD = (PORTD & ~0b01111110) | 0b00101110; break;
-  case  6: PORTD = (PORTD & ~0b01111110) | 0b01101010; break;
-  case  7: PORTD = (PORTD & ~0b01111110) | 0b01111100; break;
-  case  8: PORTD = (PORTD & ~0b01111110) | 0b01100100; break;
-  case  9: PORTD = (PORTD & ~0b01111110) | 0b01110100; break;
-  case 10: PORTD = (PORTD & ~0b01111110) | 0b01100000; break;
-  case 11: PORTD = (PORTD & ~0b01111110) | 0b01111000; break;
-  case 12: PORTD = (PORTD & ~0b01111110) | 0b01110000; break;
-  case 13: PORTD = (PORTD & ~0b01111110) | 0b01101100; break;
-  case 14: PORTD = (PORTD & ~0b01111110) | 0b01101000; break;
-  case 15: PORTD = (PORTD & ~0b01111110) | 0b01100010; break;
-  case 16: PORTD = (PORTD & ~0b01111110) | 0b00110110; break;
-  case 17: PORTD = (PORTD & ~0b01111110) | 0b00010110; break;
+  case  0: PORTD = (PORTD & ~0b01111110) | 0b01100010; break;
+  case  1: PORTD = (PORTD & ~0b01111110) | 0b01101000; break;
+  case  2: PORTD = (PORTD & ~0b01111110) | 0b01101100; break;
+  case  3: PORTD = (PORTD & ~0b01111110) | 0b01110000; break;
+  case  4: PORTD = (PORTD & ~0b01111110) | 0b01111000; break;
+  case  5: PORTD = (PORTD & ~0b01111110) | 0b01100000; break;
+  case  6: PORTD = (PORTD & ~0b01111110) | 0b01110100; break;
+  case  7: PORTD = (PORTD & ~0b01111110) | 0b01100100; break;
+  case  8: PORTD = (PORTD & ~0b01111110) | 0b01111100; break;
+  case  9: PORTD = (PORTD & ~0b01111110) | 0b01101010; break;
+  case 10: PORTD = (PORTD & ~0b01111110) | 0b00110110; break;
+  case 11: PORTD = (PORTD & ~0b01111110) | 0b00010110; break;
+  case 12: PORTD = (PORTD & ~0b01111110) | 0b01001110; break;
+  case 13: PORTD = (PORTD & ~0b01111110) | 0b00111110; break;
+  case 14: PORTD = (PORTD & ~0b01111110) | 0b00011110; break;
+  case 15: PORTD = (PORTD & ~0b01111110) | 0b01000110; break;
+  case 16: PORTD = (PORTD & ~0b01111110) | 0b00100110; break;
+  case 17: PORTD = (PORTD & ~0b01111110) | 0b00101110; break;
   }
 }

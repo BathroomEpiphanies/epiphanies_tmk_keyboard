@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = epiphanies_tmk_ghostsquid_20140518_lufa
+TARGET = ghosts_quid_20140518_lufa
 
 # Directory common source filess exist
 TMK_DIR = ../../tmk_core
@@ -48,9 +48,10 @@ TMK_DIR = ../../tmk_core
 TARGET_DIR = .
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC =	keymap.c \
-	matrix.c \
-	led.c
+SRC =	\
+  ../keymap.c \
+  matrix.c \
+  led.c
 
 CONFIG_H = config.h
 

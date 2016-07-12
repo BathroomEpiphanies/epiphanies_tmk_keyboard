@@ -1,13 +1,20 @@
-/* Copyright 2012 Jun Wako <wakojun@gmail.com>
- *
- * This is heavily based on hid_liber/board.{c|h}.
- * https://github.com/BathroomEpiphanies/AVR-Keyboard
- *
- * Copyright (c) 2012 Fredrik Atmer, Bathroom Epiphanies Inc
- * http://bathroomepiphanies.com
- *
- * As for liscensing consult with the original files or its author.
- */
+/*
+  Copyright 2014 Ralf Schmitt <ralf@bunkertor.net>
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <avr/io.h>
@@ -17,132 +24,39 @@
 #include "util.h"
 #include "matrix.h"
 
-
 #ifndef DEBOUNCE
 #   define DEBOUNCE 0
 #endif
 static uint8_t debouncing = DEBOUNCE;
 
-// bit array of key state(1:on, 0:off)
 static matrix_row_t matrix[MATRIX_ROWS];
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 
+static uint32_t read_rows(void);
+static void select_col(uint8_t col);
 
-#define _DDRA (uint8_t *const)&DDRA
-#define _DDRB (uint8_t *const)&DDRB
-#define _DDRC (uint8_t *const)&DDRC
-#define _DDRD (uint8_t *const)&DDRD
-#define _DDRE (uint8_t *const)&DDRE
-#define _DDRF (uint8_t *const)&DDRF
-
-#define _PINA (uint8_t *const)&PINA
-#define _PINB (uint8_t *const)&PINB
-#define _PINC (uint8_t *const)&PINC
-#define _PIND (uint8_t *const)&PIND
-#define _PINE (uint8_t *const)&PINE
-#define _PINF (uint8_t *const)&PINF
-
-#define _PORTA (uint8_t *const)&PORTA
-#define _PORTB (uint8_t *const)&PORTB
-#define _PORTC (uint8_t *const)&PORTC
-#define _PORTD (uint8_t *const)&PORTD
-#define _PORTE (uint8_t *const)&PORTE
-#define _PORTF (uint8_t *const)&PORTF
-
-#define _BIT0 0x01
-#define _BIT1 0x02
-#define _BIT2 0x04
-#define _BIT3 0x08
-#define _BIT4 0x10
-#define _BIT5 0x20
-#define _BIT6 0x40
-#define _BIT7 0x80
-
-/* Specifies the ports and pin numbers for the rows */
-static
-uint8_t *const row_ddr[MATRIX_ROWS] = {
-  _DDRB,                  _DDRB,
-  _DDRC,  _DDRC,
-  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,  _DDRD,
-  _DDRF,  _DDRF,                  _DDRF,  _DDRF,  _DDRF,  _DDRF};
-
-static
-uint8_t *const row_port[MATRIX_ROWS] = {
-  _PORTB,                 _PORTB,
-  _PORTC, _PORTC,
-  _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD, _PORTD,
-  _PORTF, _PORTF,                 _PORTF, _PORTF, _PORTF, _PORTF};
-
-static
-uint8_t *const row_pin[MATRIX_ROWS] = {
-  _PINB,                  _PINB,
-  _PINC,  _PINC,
-  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,  _PIND,
-  _PINF,  _PINF,                  _PINF,  _PINF,  _PINF,  _PINF};
-
-static
-const uint8_t row_bit[MATRIX_ROWS] = {
-  _BIT4,                  _BIT7,
-  _BIT6,  _BIT7,
-  _BIT0,  _BIT1,  _BIT2,  _BIT3,  _BIT4,  _BIT5,  _BIT6,  _BIT7,
-  _BIT0,  _BIT1,                  _BIT4,  _BIT5,  _BIT6,  _BIT7};
-
-static
-const uint8_t mask = 0x0E;
-
-/* Specifies the ports and pin numbers for the columns */
-static
-const uint8_t   col_bit[MATRIX_COLS] = {  0x00,   0x02,   0x04,   0x06,   0x08,   0x0A,   0x0C,   0x0E};
-
-static
-inline void pull_column(int col) {
-  PORTB = col_bit[col] | (PORTB & ~mask);
-}
-
-static
-inline void release_column(int col) {
-}
-
-/* PORTB is set as input with pull-up resistors
-   PORTC,D,E,F are set to high output */
-static
-void setup_io_pins(void) {
-  uint8_t row;
-  DDRB  |=  0x0E;
-  PORTB &= ~0x0E;
-  for(row = 0; row < MATRIX_ROWS; row++) {
-    *row_ddr[row]  &= ~row_bit[row];
-    *row_port[row] &= ~row_bit[row];
-  }
-}
-
-static
-void setup_leds(void) {
-  DDRB  |=  0x60;
-  PORTB |=  0x60;
-}
-
-
-inline
-uint8_t matrix_rows(void) {
+inline uint8_t matrix_rows(void) {
   return MATRIX_ROWS;
 }
 
-inline
-uint8_t matrix_cols(void) {
+inline uint8_t matrix_cols(void) {
   return MATRIX_COLS;
 }
 
 void matrix_init(void) {
-  // To use PORTF disable JTAG with writing JTD bit twice within four cycles.
-  MCUCR |= (1<<JTD);
-  MCUCR |= (1<<JTD);
+  MCUCR |= (1<<JTD); MCUCR |= (1<<JTD);  // Disable JTAG
 
-  // initialize row and col
-  setup_io_pins();
-  setup_leds();
+  DDRB  &= ~0b10010000;  // Row input pins
+  DDRC  &= ~0b11000000;
+  DDRD  &= ~0b11111111;
+  DDRF  &= ~0b11110011;
+  PORTB |=  0b10010000;
+  PORTC |=  0b11000000;
+  PORTD |=  0b11111111;
+  PORTF |=  0b11110011;
 
-  // initialize matrix state: all keys off
+  DDRB  |=  0b00001110;  // Column output pins
+
   for (uint8_t i=0; i < MATRIX_ROWS; i++) {
     matrix[i] = 0;
     matrix_debouncing[i] = 0;
@@ -150,10 +64,11 @@ void matrix_init(void) {
 }
 
 uint8_t matrix_scan(void) {
-  for (uint8_t col = 0; col < MATRIX_COLS; col++) {  // 0-7
-    pull_column(col);   // output hi on theline
-    _delay_us(5);       // without this wait it won't read stable value.
-    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {  // 0-17
+  for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+    select_col(col);
+    _delay_us(5);
+    uint32_t rows = read_rows();
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
       bool prev_bit = matrix_debouncing[row] & (1<<col);
       bool curr_bit = *row_pin[row] & row_bit[row];
       if (prev_bit != curr_bit) {
@@ -164,13 +79,13 @@ uint8_t matrix_scan(void) {
         debouncing = DEBOUNCE;
       }
     }
-    release_column(col);
   }
 
   if (debouncing) {
     if (--debouncing) {
       _delay_ms(1);
-    } else {
+    }
+    else {
       for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
         matrix[i] = matrix_debouncing[i];
       }
@@ -181,13 +96,10 @@ uint8_t matrix_scan(void) {
 }
 
 bool matrix_is_modified(void) {
-  // NOTE: no longer used
-  return true;
-}
-
-inline
-bool matrix_has_ghost(void) {
-  return false;
+  if (debouncing)
+    return false;
+  else
+    return true;
 }
 
 inline
@@ -201,11 +113,9 @@ matrix_row_t matrix_get_row(uint8_t row) {
 }
 
 void matrix_print(void) {
-  print("\nr/c 01234567\n");
+  print("\nr/c 0123456789ABCDEF\n");
   for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-    phex(row); print(": ");
-    pbin_reverse(matrix_get_row(row));
-    print("\n");
+    xprintf("%02X: %032lb\n", row, bitrev32(matrix_get_row(row)));
   }
 }
 
@@ -218,4 +128,39 @@ uint8_t matrix_key_count(void) {
     }
   }
   return count;
+}
+
+static uint32_t read_rows(void) {
+  return
+    (PINB&(1<<4) ? 0 : (1<< 0)) |
+    (PINB&(1<<7) ? 0 : (1<< 1)) |
+    (PINC&(1<<6) ? 0 : (1<< 2)) |
+    (PINC&(1<<7) ? 0 : (1<< 3)) |
+    (PIND&(1<<0) ? 0 : (1<< 4)) |
+    (PIND&(1<<1) ? 0 : (1<< 5)) |
+    (PIND&(1<<2) ? 0 : (1<< 6)) |
+    (PIND&(1<<3) ? 0 : (1<< 7)) |
+    (PIND&(1<<4) ? 0 : (1<< 8)) |
+    (PIND&(1<<5) ? 0 : (1<< 9)) |
+    (PIND&(1<<6) ? 0 : (1<<10)) |
+    (PIND&(1<<7) ? 0 : (1<<11)) |
+    (PINF&(1<<0) ? 0 : (1<<12)) |
+    (PINF&(1<<1) ? 0 : (1<<13)) |
+    (PINF&(1<<4) ? 0 : (1<<14)) |
+    (PINF&(1<<5) ? 0 : (1<<15)) |
+    (PINF&(1<<6) ? 0 : (1<<16)) |
+    (PINF&(1<<7) ? 0 : (1<<17));
+}
+
+static void select_col(uint8_t col) {
+  switch (col) {
+  case  0: PORTB = (PORTB & ~0b00001110) | 0b00000000; break;
+  case  1: PORTB = (PORTB & ~0b00001110) | 0b00000010; break;
+  case  2: PORTB = (PORTB & ~0b00001110) | 0b00000100; break;
+  case  3: PORTB = (PORTB & ~0b00001110) | 0b00000110; break;
+  case  4: PORTB = (PORTB & ~0b00001110) | 0b00001000; break;
+  case  5: PORTB = (PORTB & ~0b00001110) | 0b00001010; break;
+  case  6: PORTB = (PORTB & ~0b00001110) | 0b00001100; break;
+  case  7: PORTB = (PORTB & ~0b00001110) | 0b00001110; break;
+  }
 }

@@ -54,28 +54,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   KA4, KP2, KC6,                KK6,                KC0, KM3, KD0, KA1,   KO0, KK0, KL0,   KL6,      KQ6       \
 ) \
 { \
-  /* 0       1         2         3         4         5         6         7               */ \
-  {KC_NO,    KC_##KA1, KC_NO,    KC_NO,    KC_##KA4, KC_##KA5, KC_NO,    KC_##KA7}, /* A */ \
-  {KC_##KB0, KC_##KB1, KC_##KB2, KC_##KB3, KC_##KB4, KC_NO,    KC_##KB6, KC_##KB7}, /* B */ \
-  {KC_##KC0, KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_##KC5, KC_##KC6, KC_##KC7}, /* C */ \
-  {KC_##KD0, KC_##KD1, KC_##KD2, KC_##KD3, KC_##KD4, KC_##KD5, KC_NO,    KC_##KD7}, /* D */ \
-  {KC_NO,    KC_##KE1, KC_##KE2, KC_##KE3, KC_##KE4, KC_##KE5, KC_##KE6, KC_##KE7}, /* E */ \
-  {KC_##KF0, KC_##KF1, KC_##KF2, KC_##KF3, KC_##KF4, KC_##KF5, KC_##KF6, KC_##KF7}, /* F */ \
-  {KC_##KG0, KC_##KG1, KC_##KG2, KC_##KG3, KC_##KG4, KC_##KG5, KC_##KG6, KC_##KG7}, /* G */ \
-  {KC_NO,    KC_##KH1, KC_##KH2, KC_##KH3, KC_##KH4, KC_##KH5, KC_##KH6, KC_##KH7}, /* H */ \
-  {KC_NO,    KC_##KI1, KC_##KI2, KC_##KI3, KC_##KI4, KC_##KI5, KC_##KI6, KC_##KI7}, /* I */ \
-  {KC_NO,    KC_##KJ1, KC_##KJ2, KC_##KJ3, KC_##KJ4, KC_##KJ5, KC_##KJ6, KC_##KJ7}, /* J */ \
-  {KC_##KK0, KC_##KK1, KC_##KK2, KC_##KK3, KC_##KK4, KC_##KK5, KC_##KK6, KC_NO   }, /* K */ \
-  {KC_##KL0, KC_##KL1, KC_##KL2, KC_##KL3, KC_##KL4, KC_##KL5, KC_##KL6, KC_NO   }, /* L */ \
-  {KC_NO,    KC_NO,    KC_NO,    KC_##KM3, KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* M */ \
-  {KC_NO,    KC_NO,    KC_##KN2, KC_##KN3, KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* N */ \
-  {KC_##KO0, KC_NO,    KC_NO,    KC_##KO3, KC_##KO4, KC_##KO5, KC_##KO6, KC_##KO7}, /* O */ \
-  {KC_NO,    KC_NO,    KC_##KP2, KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* P */ \
-  {KC_##KQ0, KC_##KQ1, KC_##KQ2, KC_##KQ3, KC_##KQ4, KC_##KQ5, KC_##KQ6, KC_##KQ7}, /* Q */ \
-  {KC_##KR0, KC_NO,    KC_##KR2, KC_##KR3, KC_##KR4, KC_##KR5, KC_##KR6, KC_##KR7}  /* R */ \
+/* Columns and rows need to be swapped in the below definition */ \
+/* A          B          C          D          E          F          G          H          I          J          K          L          M          N          O          P          Q          R               */ \
+  {KC_NO,     KC_##KB0,  KC_##KC0,  KC_##KD0,  KC_NO,     KC_##KF0,  KC_##KG0,  KC_NO,     KC_NO,     KC_NO,     KC_##KK0,  KC_##KL0,  KC_NO,     KC_NO,     KC_##KO0,  KC_NO,     KC_##KQ0,  KC_##KR0}, /* 0 */ \
+  {KC_##KA1,  KC_##KB1,  KC_NO,     KC_##KD1,  KC_##KE1,  KC_##KF1,  KC_##KG1,  KC_##KH1,  KC_##KI1,  KC_##KJ1,  KC_##KK1,  KC_##KL1,  KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_##KQ1,  KC_NO   }, /* 1 */ \
+  {KC_NO,     KC_##KB2,  KC_NO,     KC_##KD2,  KC_##KE2,  KC_##KF2,  KC_##KG2,  KC_##KH2,  KC_##KI2,  KC_##KJ2,  KC_##KK2,  KC_##KL2,  KC_NO,     KC_##KN2,  KC_NO,     KC_##KP2,  KC_##KQ2,  KC_##KR2}, /* 2 */ \
+  {KC_NO,     KC_##KB3,  KC_NO,     KC_##KD3,  KC_##KE3,  KC_##KF3,  KC_##KG3,  KC_##KH3,  KC_##KI3,  KC_##KJ3,  KC_##KK3,  KC_##KL3,  KC_##KM3,  KC_##KN3,  KC_##KO3,  KC_NO,     KC_##KQ3,  KC_##KR3}, /* 3 */ \
+  {KC_##KA4,  KC_##KB4,  KC_NO,     KC_##KD4,  KC_##KE4,  KC_##KF4,  KC_##KG4,  KC_##KH4,  KC_##KI4,  KC_##KJ4,  KC_##KK4,  KC_##KL4,  KC_NO,     KC_NO,     KC_##KO4,  KC_NO,     KC_##KQ4,  KC_##KR4}, /* 4 */ \
+  {KC_##KA5,  KC_NO,     KC_##KC5,  KC_##KD5,  KC_##KE5,  KC_##KF5,  KC_##KG5,  KC_##KH5,  KC_##KI5,  KC_##KJ5,  KC_##KK5,  KC_##KL5,  KC_NO,     KC_NO,     KC_##KO5,  KC_NO,     KC_##KQ5,  KC_##KR5}, /* 5 */ \
+  {KC_NO,     KC_##KB6,  KC_##KC6,  KC_NO,     KC_##KE6,  KC_##KF6,  KC_##KG6,  KC_##KH6,  KC_##KI6,  KC_##KJ6,  KC_##KK6,  KC_##KL6,  KC_NO,     KC_NO,     KC_##KO6,  KC_NO,     KC_##KQ6,  KC_##KR6}, /* 6 */ \
+  {KC_##KA7,  KC_##KB7,  KC_##KC7,  KC_##KD7,  KC_##KE7,  KC_##KF7,  KC_##KG7,  KC_##KH7,  KC_##KI7,  KC_##KJ7,  KC_NO,     KC_NO,     KC_NO,     KC_NO,     KC_##KO7,  KC_NO,     KC_##KQ7,  KC_##KR7}  /* 7 */ \
 }
 
-#include "keymap_ansi.h"
+#include "keymap_ansi_iso_jis.h"
 
 #define KEYMAPS_SIZE    (sizeof(keymaps) / sizeof(keymaps[0]))
 #define FN_ACTIONS_SIZE (sizeof(fn_actions) / sizeof(fn_actions[0]))
@@ -97,3 +88,30 @@ action_t keymap_fn_to_action(uint8_t keycode) {
     action.code = ACTION_NO;
   return action;
 }
+
+
+
+
+
+
+//{ \
+//  /* 0       1         2         3         4         5         6         7               */ \
+//  {KC_NO,    KC_##KA1, KC_NO,    KC_NO,    KC_##KA4, KC_##KA5, KC_NO,    KC_##KA7}, /* A */ \
+//  {KC_##KB0, KC_##KB1, KC_##KB2, KC_##KB3, KC_##KB4, KC_NO,    KC_##KB6, KC_##KB7}, /* B */ \
+//  {KC_##KC0, KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_##KC5, KC_##KC6, KC_##KC7}, /* C */ \
+//  {KC_##KD0, KC_##KD1, KC_##KD2, KC_##KD3, KC_##KD4, KC_##KD5, KC_NO,    KC_##KD7}, /* D */ \
+//  {KC_NO,    KC_##KE1, KC_##KE2, KC_##KE3, KC_##KE4, KC_##KE5, KC_##KE6, KC_##KE7}, /* E */ \
+//  {KC_##KF0, KC_##KF1, KC_##KF2, KC_##KF3, KC_##KF4, KC_##KF5, KC_##KF6, KC_##KF7}, /* F */ \
+//  {KC_##KG0, KC_##KG1, KC_##KG2, KC_##KG3, KC_##KG4, KC_##KG5, KC_##KG6, KC_##KG7}, /* G */ \
+//  {KC_NO,    KC_##KH1, KC_##KH2, KC_##KH3, KC_##KH4, KC_##KH5, KC_##KH6, KC_##KH7}, /* H */ \
+//  {KC_NO,    KC_##KI1, KC_##KI2, KC_##KI3, KC_##KI4, KC_##KI5, KC_##KI6, KC_##KI7}, /* I */ \
+//  {KC_NO,    KC_##KJ1, KC_##KJ2, KC_##KJ3, KC_##KJ4, KC_##KJ5, KC_##KJ6, KC_##KJ7}, /* J */ \
+//  {KC_##KK0, KC_##KK1, KC_##KK2, KC_##KK3, KC_##KK4, KC_##KK5, KC_##KK6, KC_NO   }, /* K */ \
+//  {KC_##KL0, KC_##KL1, KC_##KL2, KC_##KL3, KC_##KL4, KC_##KL5, KC_##KL6, KC_NO   }, /* L */ \
+//  {KC_NO,    KC_NO,    KC_NO,    KC_##KM3, KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* M */ \
+//  {KC_NO,    KC_NO,    KC_##KN2, KC_##KN3, KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* N */ \
+//  {KC_##KO0, KC_NO,    KC_NO,    KC_##KO3, KC_##KO4, KC_##KO5, KC_##KO6, KC_##KO7}, /* O */ \
+//  {KC_NO,    KC_NO,    KC_##KP2, KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO   }, /* P */ \
+//  {KC_##KQ0, KC_##KQ1, KC_##KQ2, KC_##KQ3, KC_##KQ4, KC_##KQ5, KC_##KQ6, KC_##KQ7}, /* Q */ \
+//  {KC_##KR0, KC_NO,    KC_##KR2, KC_##KR3, KC_##KR4, KC_##KR5, KC_##KR6, KC_##KR7}  /* R */ \
+//}

@@ -1,5 +1,5 @@
 /*
-  Copyright 2012 Jun Wako <wakojun@gmail.com>
+  Copyright 2014 Ralf Schmitt <ralf@bunkertor.net>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,23 +19,21 @@
 #include "stdint.h"
 #include "led.h"
 
-/* LED pin configuration
- *
- * Scroll Lock  PB6
- * Caps Lock    PB5
- *
- */
-void led_set(uint8_t usb_led)
-{
-  DDRB |= (1<<6) | (1<<5);
-
+void led_set(uint8_t usb_led) {
+  CONFIG_LED_IO;
+  
   if (usb_led & (1<<USB_LED_CAPS_LOCK))
-    PORTB &= ~(1<<5);
+    USB_LED_CAPS_LOCK_ON;
   else
-    PORTB |=  (1<<5);
+    USB_LED_CAPS_LOCK_OFF;
+
+  if (usb_led & (1<<USB_LED_NUM_LOCK))
+    USB_LED_NUM_LOCK_ON;
+  else
+    USB_LED_NUM_LOCK_OFF;
   
   if (usb_led & (1<<USB_LED_SCROLL_LOCK))
-    PORTB &= ~(1<<6);
+    USB_LED_SCROLL_LOCK_ON;
   else
-    PORTB |=  (1<<6);
+    USB_LED_SCROLL_LOCK_OFF;
 }

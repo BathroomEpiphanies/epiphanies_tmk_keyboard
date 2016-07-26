@@ -39,17 +39,17 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = ghosts_quid_20140518_lufa
+TARGET = main
 
 # Directory common source filess exist
-TMK_DIR = ../../tmk_core
+TMK_DIR = ../tmk_core
 
 # Directory keyboard dependent files exist
 TARGET_DIR = .
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC =	\
-  ../keymap.c \
+  keymap.c \
   matrix.c \
   led.c
 
@@ -116,3 +116,34 @@ VPATH += $(TMK_DIR)
 include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
 include $(TMK_DIR)/rules.mk
+
+
+black_petal_20131001: OPT_DEFS += -Dblack_petal_20131001
+black_petal_20131001: all
+
+cool_talk_20151102: OPT_DEFS += -Dcool_talk_20151102
+cool_talk_20151102: all
+
+frosty_flake_20130602: OPT_DEFS += -Dfrosty_flake_20130602
+frosty_flake_20130602: all
+
+frosty_flake_20140521: OPT_DEFS += -Dfrosty_flake_20140521
+frosty_flake_20140521: all
+
+ghost_squid_20140518: OPT_DEFS += -Dghost_squid_20140518
+ghost_squid_20140518: all
+
+kitten_paw_20130602: OPT_DEFS += -Dkitten_paw_20130602
+kitten_paw_20130602: all
+#kitten_paw_20130602: $(shell mv main.hex kitten_paw_20130602.hex)
+
+kitten_paw_20160418: OPT_DEFS += -Dkitten_paw_20160418
+kitten_paw_20160418: all
+#  $(shell mv main.hex kitten_paw_20160418.hex)
+
+pegasus_hoof_20131001: OPT_DEFS += -Dpegasus_hoof_20131001
+pegasus_hoof_20131001: all
+
+pegasus_hoof_20150108: OPT_DEFS += -Dpegasus_hoof_20150108
+pegasus_hoof_20150108: all
+

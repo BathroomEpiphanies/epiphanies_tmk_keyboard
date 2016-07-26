@@ -18,24 +18,24 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x6050
-#define DEVICE_VER      0x0104
-#define MANUFACTURER    Costar
-#define PRODUCT         Majestouch
-
-/* message strings */
-#define DESCRIPTION     t.m.k. keyboard firmware for Majestouch
-
-/* matrix size */
-#define MATRIX_ROWS 8
-#define MATRIX_COLS 18
-
-/* Set 0 if need no debouncing */
-#define DEBOUNCE    5
-
-/* key combination for command */
-#define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
+#if   defined black_petal_20131001
+#include "config_black_petal_20131001.h"
+#elif defined cool_talk_20151102
+#include "config_cool_talk_20151102.h"
+#elif defined frosty_flake_20130602
+#include "config_frosty_flake_20130602.h"
+#elif defined frosty_flake_20140521
+#include "config_frosty_flake_20140521.h"
+#elif defined ghost_squid_20140518
+#include "config_ghost_squid_20140518.h"
+#elif defined kitten_paw_20130602
+#include "config_kitten_paw_20130602.h"
+#elif defined kitten_paw_20160418
+#include "config_kitten_paw_20160418.h"
+#elif defined pegasus_hoof_20131001
+#include "config_pegasus_hoof_20131001.h"
+#elif defined pegasus_hoof_20150108
+#include "config_pegasus_hoof_20150108.h"
+#endif
 
 #endif

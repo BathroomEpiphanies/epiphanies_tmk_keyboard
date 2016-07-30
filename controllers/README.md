@@ -9,9 +9,13 @@ Build
 -----
 Move to the appropriate directory then just run `make` like:
 
-  $ make -f Makefile.lufa
+  $ make -f Makefile.lufa controller_version [flip|dfu|teensy|program]
 
 At the moment only the LUFA stack is supported.
+
+If you've made any changes it is usually a good idea to issue a make clean before compiling again.
+
+  $ make -f Makefile.lufa clean
 
 
 Bootloader

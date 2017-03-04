@@ -10,13 +10,18 @@ The latest source code for the core library is available here:
 The latest source code for the individual projects is available here:
 <https://github.com/BathroomEpiphanies/epiphanies_tmk_keyboard>
 
+This repository only contains the configuration files for the Bathroom
+Epiphaneis projects. To build the firmwares with tmk_keyboard you need
+to check out the tmk_keyboard repository and move the be_controller or
+be_keyboard folders to the root of that repository.
+
 Projects
 --------
-### keyboard
+### be_keyboard
 * [The Sane Matrix](keyboard/sane_matrix_20151027/) - [geekhack forum](https://geekhack.org/index.php?topic=78059.0)
 * [The Firefly](keyboard/firefly_20141024/)         - [geekhack forum](https://geekhack.org/index.php?topic=74907.0)
 
-### controller
+### be_controller
 * [Black Petal 2013](controller/black_petal_20131001/)    - [geekhack forum](https://geekhack.org/index.php?topic=46700.0)
 * [Cool Talk 2015](controller/cool_talk_20151102/)        - [geekhack forum](https://geekhack.org/index.php?topic=46700.0)
 * [Frosty Flake 2013](controller/frosty_flake_20130602/)  - [geekhack forum](https://geekhack.org/index.php?topic=46700.0)

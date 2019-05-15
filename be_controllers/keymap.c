@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /*
   Matrix col/row mapping
-  
+
   ,----.    ,-------------------. ,-------------------. ,-------------------. ,--------------.
   | J6 |    | I4 | H4 | H2 | H6 | | A7 | E6 | D2 | D4 | | B4 | B7 | B6 | B0 | | C7 | C5 | A5 |
   `----'    `-------------------' `-------------------' `-------------------' `--------------'
@@ -81,12 +81,9 @@ uint8_t keymap_key_to_keycode(uint8_t layer, keypos_t key) {
 
 /* translates Fn keycode to action */
 action_t keymap_fn_to_action(uint8_t keycode) {
-  action_t action;
   if (FN_INDEX(keycode) < FN_ACTIONS_SIZE)
-    action.code = pgm_read_word(&fn_actions[FN_INDEX(keycode)]);
-  else
-    action.code = ACTION_NO;
-  return action;
+    return (action_t){ .code = pgm_read_word(&fn_actions[FN_INDEX(keycode)])};
+  return (action_t)ACTION_NO;
 }
 
 
